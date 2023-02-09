@@ -2,13 +2,13 @@ def do_math(num1, num2, operator):
     return num1 + num2 if operator == '+' else num1 - num2
 
 def build_result_list(lst, len_of_longest_element, with_result):
-    l = []
-    l.append(repr(int(lst[0])).rjust(len_of_longest_element+2))
-    l.append(f'{lst[1]}{repr(int(lst[2])).rjust(len_of_longest_element+1)}')
-    l.append('-' * (len_of_longest_element + 2))
+    res = []
+    res.append(repr(int(lst[0])).rjust(len_of_longest_element+2))
+    res.append(f'{lst[1]}{repr(int(lst[2])).rjust(len_of_longest_element+1)}')
+    res.append('-' * (len_of_longest_element + 2))
     if with_result:
-        l.append(repr(do_math(int(lst[0]), int(lst[2]), lst[1])).rjust(len_of_longest_element+2))
-    return l
+        res.append(repr(do_math(int(lst[0]), int(lst[2]), lst[1])).rjust(len_of_longest_element+2))
+    return res
 
 
 def arithmetic_arranger(problems, with_result=False):
@@ -33,12 +33,9 @@ def arithmetic_arranger(problems, with_result=False):
     
         lst.append(build_result_list(l, longest_num, with_result))
 
-    arranged_problems = ''
+    result = []
     for i in range(0, len(lst[0])):
-        for item in lst:
-            arranged_problems += f'{item[i]}    '
-        arranged_problems = arranged_problems.rstrip()
-        if i != len(lst[0])-1:
-            arranged_problems += '\n'
-            
+        result.append('    '.join([item[i] for item in lst]))
+    
+    arranged_problems = '\n'.join(result)
     return arranged_problems
